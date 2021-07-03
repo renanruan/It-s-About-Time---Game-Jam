@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ageable
+  - Ageable_Pushable
+  - Pushable
+  - Activate_Area
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Wall
+  - Water
+  - UI
+  - Player
+  - Enemy
+  - Object
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 14781273
+    locked: 0
+  - name: Player
+    uniqueID: 1066764823
+    locked: 0
+  - name: Shot
+    uniqueID: 2646724697
+    locked: 0
+  - name: AgeBar
+    uniqueID: 644350285
+    locked: 0
+  - name: Cursor
+    uniqueID: 4252435377
+    locked: 0
+  - name: Cover
+    uniqueID: 905711291
+    locked: 0
