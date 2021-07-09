@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class PlayerGunBarrel : MonoBehaviour
 {
-    public GameObject BulletPrefab;
+    [SerializeField]
+    private PlayerGunSound GunSounds;
 
-    public Transform BulletSpawnPoint;
+    [SerializeField]
+    private GameObject BulletPrefab;
 
-    public GameObject PlayerUnit;
+    [SerializeField]
+    private Transform BulletSpawnPoint;
 
-    public PlayerAimCursor AimCursor;
+    [SerializeField]
+    private GameObject PlayerUnit;
+
+    [SerializeField]
+    private PlayerAimCursor AimCursor;
+
+    [SerializeField]
+    private Animator Glow;
+
+    [SerializeField]
+    private ParticleSystem Particles;
 
     private RecycleKeeper MyBarrel;
 
@@ -34,7 +47,9 @@ public class PlayerGunBarrel : MonoBehaviour
         SetBulletDirection();
         SetBulletOrigin();
         FireBullet();
-
+        GlowOnShot();
+        EmitParticles();
+        PlaySound();
     }
 
     private void CreateBullet()
@@ -68,6 +83,19 @@ public class PlayerGunBarrel : MonoBehaviour
         newBullet.SetActive(true);
     }
 
+    private void GlowOnShot()
+    {
+        Glow.SetTrigger("Glow");
+    }
 
+    private void EmitParticles()
+    {
+        Particles.Play();
+    }
+
+    private void PlaySound()
+    {
+        GunSounds.PlaySound();
+    }
 
 }

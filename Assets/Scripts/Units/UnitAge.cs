@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitAge : MonoBehaviour, Ageable
 {
-    public enum AgeStage { Baby, Young, Adult, Old};
+    public enum AgeStage {Young, Adult, Old};
 
     [SerializeField]
     private int StartingAge;
@@ -27,17 +27,22 @@ public class UnitAge : MonoBehaviour, Ageable
     [SerializeField]
     private AgeStage CurrentStage;
 
+    void Awake()
+    {
+        CreateMyAge(); 
+    }
+
     void Start()
     {
-        CreateMyAge();
-        RegisterAgeStageEvent();
-        RegisterMaxAgeLimitEvent();
-        RegisterMinAgeLimitEvent();
+        ConfigUnitAnimation();
+
+        RegisterAgeStageEvent(EnterAgeStage);
+        RegisterMaxAgeLimitEvent(OnMaxAgeReach);
+        RegisterMinAgeLimitEvent(OnMinAgeReach);
 
         ConfigAgeBar();
 
-        ConfigUnitAnimation();
-        
+
     }
 
     private void CreateMyAge()
@@ -45,9 +50,9 @@ public class UnitAge : MonoBehaviour, Ageable
         MyAge = new Age(StartingAge, MinAge, MaxAge, AgeStages.Length);
     }
 
-    private void RegisterAgeStageEvent()
+    public void RegisterAgeStageEvent(EnteredNewStage onEnterStage)
     {
-        MyAge.EnteredStage += EnterAgeStage;
+        MyAge.RegisterEnteredStageEnvet(onEnterStage);
     }
 
     private void EnterAgeStage(AgeStage stage)
@@ -57,14 +62,14 @@ public class UnitAge : MonoBehaviour, Ageable
         CurrentStage = stage;
     }
 
-    private void RegisterMaxAgeLimitEvent()
+    public void RegisterMaxAgeLimitEvent(AgeLimitReached ageLimitEvent)
     {
-        MyAge.MaxLimitReached += OnMaxAgeReach;
+        MyAge.MaxLimitReached += ageLimitEvent;
     }
 
-    private void RegisterMinAgeLimitEvent()
+    public void RegisterMinAgeLimitEvent(AgeLimitReached ageLimitEvent)
     {
-        MyAge.MinLimitReached += OnMinAgeReach;
+        MyAge.MinLimitReached += ageLimitEvent;
     }
 
     private void OnMaxAgeReach()
@@ -87,12 +92,36 @@ public class UnitAge : MonoBehaviour, Ageable
         UnitAnimation = GetComponent<UnitAnimationControl>();
     }
 
+    public void SetAgeTo(float newValue)
+    {
+        ChangeMyAgeValue(newValue - MyAge.GetCurrentAge());
+        ChangeBarAgeValue();
+    }
 
-
-    public void ChangeAge(float deltaChange)
+    public void ChangeAgeBy(float deltaChange)
     {
         ChangeMyAgeValue(deltaChange);
         ChangeBarAgeValue();
+    }
+
+    public bool CanAgeAmount(float deltaAmount)
+    {
+        if(deltaAmount > 0)
+        {
+            if (MyAge.GetCurrentAge() < MaxAge - 1)
+            {
+                return true;
+            }
+        }
+        else if(deltaAmount < 0)
+        {
+            if (MyAge.GetCurrentAge() > MinAge)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void ChangeMyAgeValue(float deltaChange)
@@ -108,5 +137,10 @@ public class UnitAge : MonoBehaviour, Ageable
     public AgeStage GetStageAge()
     {
         return CurrentStage;
+    }
+
+    public float GetAge()
+    {
+        return MyAge.GetCurrentAge();
     }
 }

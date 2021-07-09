@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : UnitMovement
 {
+    [Header("Player Movement Parameters")]
+    [SerializeField]
+    private PlayerAgeAttributes[] Attributes;
+
+    [SerializeField]
+    private UnitAge PlayerAge;
+
     [SerializeField]
     private float MaxVerticalSpeed = 1;
     [SerializeField]
@@ -11,12 +18,35 @@ public class PlayerMovement : UnitMovement
 
     public event AnimEvent SpeedChange;
 
+    private void Start()
+    {
+        StartUnitMoviment();
+        RegisterOnAgeChange();
+        
+    }
+
+    private void RegisterOnAgeChange()
+    {
+        PlayerAge.RegisterAgeStageEvent(SetAttribute);
+    }
+
+    private void SetAttribute(UnitAge.AgeStage stage)
+    {
+        PlayerAgeAttributes attributes = Attributes[(int)stage];
+
+        MaxHorizontalSpeed = attributes.MaxHorizontalSpeed;
+        MaxVerticalSpeed = attributes.MaxVerticalSpeed;
+    }
+
     void FixedUpdate()
     {
         GetSpeedFromInputs();
 
         CallSpeedChangeEvent();
+    }
 
+    private void Update()
+    {
         if (HasSpeed())
         {
             MoveUsingSpeed();
@@ -39,4 +69,5 @@ public class PlayerMovement : UnitMovement
         return (CurrentHorizontalSpeed != 0f || CurrentVerticalSpeed != 0f);
     }
     
+
 }

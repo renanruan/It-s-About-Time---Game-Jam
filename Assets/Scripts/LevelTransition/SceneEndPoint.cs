@@ -7,6 +7,9 @@ public class SceneEndPoint : MonoBehaviour
     [SerializeField]
     private Vector2 BoxSize;
 
+    [SerializeField]
+    private string NextLevelName;
+
     private LayerMask playerLayer;
 
     private RaycastHit2D detected;
@@ -44,7 +47,7 @@ public class SceneEndPoint : MonoBehaviour
 
     private void EndLevel()
     {
-        LevelTransitioner.ChangeToScene("SampleScene2");
+        LevelTransitioner.ChangeToScene(NextLevelName);
     }
 
     private void OnDrawGizmos()

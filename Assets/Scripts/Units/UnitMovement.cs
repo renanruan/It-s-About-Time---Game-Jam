@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class UnitMovement : MonoBehaviour
 {
-    protected float CurrentVerticalSpeed = 0;
-    protected float CurrentHorizontalSpeed = 0;
+
+    [Header("Unit Movement Parameters")]
 
     public float DistanceFromObjectCenterToBorder = 0.5f;
+
+    [SerializeField]
+    protected UnitAge UnitCurrentAge;
+
+    protected float CurrentVerticalSpeed = 0;
+    protected float CurrentHorizontalSpeed = 0;
 
     private ContactFilter2D solidsFilter2D;
 
@@ -17,7 +23,10 @@ public class UnitMovement : MonoBehaviour
 
     private const int MAXSOLIDS = 3;
 
-    void Start()
+    [SerializeField]
+    private PlayerAnimationControl DeathAnimator;
+
+    protected void StartUnitMoviment()
     {
         CreateSolidFilter();
         UseTriggerFilter();
@@ -33,7 +42,6 @@ public class UnitMovement : MonoBehaviour
     {
         solidsFilter2D.useTriggers = true;
     }
-
 
     protected void MoveUsingSpeed()
     {
@@ -108,8 +116,18 @@ public class UnitMovement : MonoBehaviour
 
     private void PushSolidsOnPath()
     {
+        if(CannotPush())
+        {
+            return;
+        }
+
         PushSolids();
         MoveAlongPush();
+    }
+
+    private bool CannotPush()
+    {
+        return UnitCurrentAge != null && UnitCurrentAge.GetStageAge() == UnitAge.AgeStage.Young;
     }
 
     private void PushSolids()
@@ -136,4 +154,5 @@ public class UnitMovement : MonoBehaviour
     {
         transform.position += pathToWalk;
     }
+
 }

@@ -12,17 +12,37 @@ public class ObjectMovement : UnitMovement, Pushable
     [SerializeField]
     private float FrictionFactor = 1;
 
+    [SerializeField]
+    private BoxCollider2D MyCollider;
+
+    void Start()
+    {
+        StartUnitMoviment();
+    }
+
     public void Push(Vector3 Direction)
     {
-        print("Push");
         SetSpeed(Direction);
-        StartPushMoviment();
+        if (IsPathClear())
+        {
+            StartPushMoviment();
+        }
+        else
+        {
+            SetSpeed(Vector3.zero);
+        }
     }
 
     private void SetSpeed(Vector3 Direction)
     {
         CurrentHorizontalSpeed = Direction.x * MaxHorizontalSpeed;
         CurrentVerticalSpeed = Direction.y * MaxVerticalSpeed;
+    }
+
+    private bool IsPathClear()
+    {
+        Vector3 Direction = GetSpeed();
+        return Physics2D.BoxCast(MyCollider.transform.position, MyCollider.size * 0.9f, 0, Direction, Direction.magnitude * Time.deltaTime, LayerMask.GetMask("Wall")).collider == null;
     }
 
     private void StartPushMoviment()

@@ -15,6 +15,11 @@ public class Bullet : Keeped
     [SerializeField]
     private float MovementSpeed;
 
+    [Header("Bump Settings")]
+
+    [SerializeField]
+    private float BumpForce;
+
     private Timer DeathTimer;
 
     private  Vector3 MovementDirection;
@@ -129,9 +134,26 @@ public class Bullet : Keeped
 
     private void OnCollision()
     {
+        Bump();
         Die();
     }
 
+    private void Bump()
+    {
+        if (!MyCollider.GetDetected().tag.Contains("Player"))
+        {
+            return;
+        }
+
+        GameObject bumpObject = new GameObject();
+
+        LittleBump bump = bumpObject.AddComponent<LittleBump>();
+
+        bump.Force = 1;
+        bump.Drag = 1;
+        bump.Direction = MovementDirection;
+        bump.Target = MyCollider.GetDetected();
+    }
 
     private void Die()
     {

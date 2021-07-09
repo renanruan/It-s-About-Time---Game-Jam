@@ -23,15 +23,16 @@ public class Age
     public Age(int startingAge, int minAge, int maxAge, int stages)
     {
         CurrentAge = startingAge;
+
         MinAge = minAge;
-        MaxAge = maxAge;
+        MaxAge = maxAge - 1;
 
         CreateMyStages(stages);
     }
 
     private void CreateMyStages(int numStages)
     {
-        MyStages = new AgeRanges(MinAge, MaxAge, numStages);
+        MyStages = new AgeRanges(MinAge, MaxAge + 1, numStages, (int)CurrentAge);
     }
 
     public void ChangeAgeBy(float amount)
@@ -67,7 +68,6 @@ public class Age
 
     private void ReachMaxLimit()
     {
-        Debug.Log("Max Age");
         MaxLimitReached.Invoke();
         CurrentAge = MaxAge;
     }
@@ -87,7 +87,6 @@ public class Age
 
     private void ReachMinLimit()
     {
-        Debug.Log("Min Age");
         MinLimitReached();
         CurrentAge = MinAge;
     }
@@ -96,10 +95,15 @@ public class Age
     {
         if(MyStages.DoesChangeStateForAge((int)CurrentAge))
         {
-            EnteredStage.Invoke(MyStages.GetStage());
+            EnteredStage?.Invoke(MyStages.GetStage());
         }
     }
 
+    public void RegisterEnteredStageEnvet(EnteredNewStage functionCall)
+    {
+        EnteredStage += functionCall;
+        EnteredStage.Invoke(MyStages.GetStage());
+    }
 
 
     public float GetCurrentAge()

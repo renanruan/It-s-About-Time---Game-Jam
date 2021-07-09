@@ -40,11 +40,12 @@ public class DamageDealer
 
     private bool IsDetectedDamegeable()
     {
-        return Detected.tag.Contains("Enemy");
+        return Detected.tag.Contains("Player");
     }
 
     private void DamegeDetected()
     {
-
+        Detected.tag = "Untagged";
+        Detected.GetComponent<PlayerHealth>().ChangeHealthBy(-DamageValue);
     }
 }

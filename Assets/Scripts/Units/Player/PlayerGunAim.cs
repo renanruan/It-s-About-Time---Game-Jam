@@ -11,6 +11,8 @@ public class PlayerGunAim : MonoBehaviour
     void Start()
     {
         RegisterAimMovementEvent();
+
+        enabled = false;
     }
 
     private void RegisterAimMovementEvent()

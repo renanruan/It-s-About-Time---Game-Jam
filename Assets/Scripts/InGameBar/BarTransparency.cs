@@ -33,7 +33,7 @@ public class BarTransparency : MonoBehaviour
         anim.SetFloat("Direction", -1);
     }
 
-    public void ShowBarAndMarker()
+    public void ShowBar()
     {
         if (isVisible)
         {

@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface Ageable
 {
-    void ChangeAge(float deltaChange);
+    void ChangeAgeBy(float deltaChange);
+
+    bool CanAgeAmount(float deltaAmount);
 }

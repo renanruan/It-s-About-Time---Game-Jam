@@ -21,7 +21,7 @@ public class RecycleKeeper
 
     private void CreateKeeper()
     {
-        Keeper = GameObject.Instantiate(new GameObject());
+        Keeper = new GameObject();
         Keeper.name = KeepedPrefab.name + " Holder" + Random.Range(0, 1000);
     }
 

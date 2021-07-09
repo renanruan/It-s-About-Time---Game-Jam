@@ -60,6 +60,6 @@ public class InGameBar : MonoBehaviour
 
     private void ShowBarAndMarker()
     {
-        Transparency.ShowBarAndMarker();
+        Transparency.ShowBar();
     }
 }

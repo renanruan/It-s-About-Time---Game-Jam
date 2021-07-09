@@ -22,6 +22,6 @@ public class PlayerGunRecoil : MonoBehaviour
 
     private void ChangePlayerAge(float amount)
     {
-        PlayerAge.ChangeAge(amount);
+        PlayerAge.ChangeAgeBy(amount);
     }
 }

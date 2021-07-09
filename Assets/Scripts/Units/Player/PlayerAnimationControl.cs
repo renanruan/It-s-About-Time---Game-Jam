@@ -19,17 +19,27 @@ public class PlayerAnimationControl : MonoBehaviour, UnitAnimationControl
     private AnimatorOverrideController PlayerOldAnimator;
 
 
-    [Header("Animation Trigger Components")]
+    [Header("Animation Trigger Stats")]
 
     [SerializeField]
     private PlayerMovement PlayerSpeedControl;
 
+    [SerializeField]
+    private PlayerHealth PlayerHealthControl;
 
+
+    [Header("Components to Manipulate During Animation")]
+
+    [SerializeField]
+    private MonoBehaviour[] ComponentsToLock;
+
+    private event AnimEvent DieEvent;
 
     private void Start()
     {
         RegisterSpeedEvent();
         RegisterHurtEvent();
+        RegisterDeathEvent();
         RegisterDieEvent();
     }
 
@@ -45,7 +55,7 @@ public class PlayerAnimationControl : MonoBehaviour, UnitAnimationControl
 
     private void RegisterHurtEvent()
     {
-
+        PlayerHealthControl.GotHurt += OnGetHurt;
     }
 
     void OnGetHurt()
@@ -53,9 +63,9 @@ public class PlayerAnimationControl : MonoBehaviour, UnitAnimationControl
         PlayerAnimator.SetTrigger("Hurt");
     }
 
-    private void RegisterDieEvent()
+    private void RegisterDeathEvent()
     {
-
+        PlayerHealthControl.GotDead += OnGetDead;
     }
 
     void OnGetDead()
@@ -63,13 +73,20 @@ public class PlayerAnimationControl : MonoBehaviour, UnitAnimationControl
         PlayerAnimator.SetTrigger("Dead");
     }
 
+    public void RegisterDieEvent()
+    {
+        this.DieEvent += OnDie;
+    }
+
+    public void OnDie()
+    {
+
+    }
+
     public void TurnUnitInto(UnitAge.AgeStage stage)
     {
         switch (stage)
         {
-            case UnitAge.AgeStage.Baby:
-                TurnBaby();
-                break;
             case UnitAge.AgeStage.Young:
                 TurnYoung();
                 break;
@@ -104,5 +121,36 @@ public class PlayerAnimationControl : MonoBehaviour, UnitAnimationControl
     }
 
 
+    public void RegisterDieEvent(AnimEvent DieEvent)
+    {
+        this.DieEvent += DieEvent;
+    }
+
+    public void CallDieEvent()
+    {
+        DieEvent.Invoke();
+    }
+
+    public void LockComponents()
+    {
+        foreach(MonoBehaviour component in ComponentsToLock)
+        {
+            component.enabled = false;
+        }
+    }
+
+    public void UnlockComponents()
+    {
+        gameObject.tag = "Player";
+        foreach (MonoBehaviour component in ComponentsToLock)
+        {
+            component.enabled = true;
+        }
+    }
+
+    public void RestartLevel()
+    {
+        LevelTransitioner.RestartScene();
+    }
 
 }

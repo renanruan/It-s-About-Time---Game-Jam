@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HourGlassOld
+  m_Controller: {fileID: 9100000, guid: 9ef066eee30c80945af0d1daa64bdf3e, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 6b376a2b2b2d07b4fa01d651c170bb99, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 39271f96b5ca12444a393f7df16b4262, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d48d2b4e73f35284a9d677615c55accf, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f33b2e8c11c51604cbf0bf28677c094e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ea36d212e133540449a3463ab36161c4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8927840230a57204093b95de89095376, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7163a394c70068e43b4f922507c1e96b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7163a394c70068e43b4f922507c1e96b, type: 2}

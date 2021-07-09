@@ -15,7 +15,7 @@ public class AgeRanges
         public int MaxValue;
     }
 
-    public AgeRanges (int minValue, int maxValue, int ranges)
+    public AgeRanges (int minValue, int maxValue, int ranges, int startingAge)
     {
         int rangeSize = (maxValue - minValue) / ranges;
 
@@ -30,6 +30,8 @@ public class AgeRanges
 
             Ranges[i] = range;
         }
+
+        CurrentRangeID = GetRangeIdFromAge(startingAge);
     }
 
     public bool DoesChangeStateForAge(int newAge)

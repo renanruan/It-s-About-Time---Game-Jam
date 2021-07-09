@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelTransitioner : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class LevelTransitioner : MonoBehaviour
     {
         Instance = this;
     }
-
 
     void Start()
     {
@@ -53,5 +53,10 @@ public class LevelTransitioner : MonoBehaviour
     public static void ChangeToScene(string sceneName)
     {
         Instance.StartiTransitionToScene(sceneName);
+    }
+
+    public static void RestartScene()
+    {
+        Instance.StartiTransitionToScene(SceneManager.GetActiveScene().name);
     }
 }
